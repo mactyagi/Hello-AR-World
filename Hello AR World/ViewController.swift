@@ -22,11 +22,13 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         // Show statistics such as fps and timing information
         sceneView.showsStatistics = true
         
-        // Create a new scene
-        let scene = SCNScene(named: "art.scnassets/ship.scn")!
+        sceneView.debugOptions = [
+            .showWorldOrigin,
+            .showFeaturePoints
+        ]
         
-        // Set the scene to the view
-        sceneView.scene = scene
+        sceneView.autoenablesDefaultLighting = true
+        
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -37,6 +39,9 @@ class ViewController: UIViewController, ARSCNViewDelegate {
 
         // Run the view's session
         sceneView.session.run(configuration)
+        
+        drawSphereAtOrigin()
+        drawBOxAt1200High()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -45,7 +50,22 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         // Pause the view's session
         sceneView.session.pause()
     }
+    
+    func drawSphereAtOrigin() {
+        let sphere = SCNNode(geometry: SCNSphere(radius: 0.05))
+        sphere.geometry?.firstMaterial?.diffuse.contents = UIColor.blue
+        sphere.position = SCNVector3(0, 0, 0)
+        sceneView.scene.rootNode.addChildNode(sphere)
+    }
 
+    func drawBOxAt1200High() {
+        let box = SCNNode(geometry: SCNBox(width: 0.1, height: 0.1, length: 0.1, chamferRadius: 0))
+        box.position = SCNVector3(0, 0.2, -0.3)
+        box.geometry?.firstMaterial?.diffuse.contents = UIColor.orange
+        box.geometry?.firstMaterial?.specular.contents = UIColor.green
+        sceneView.scene.rootNode.addChildNode(box)
+    }
+    
     // MARK: - ARSCNViewDelegate
     
 /*
