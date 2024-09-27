@@ -40,10 +40,11 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         // Run the view's session
         sceneView.session.run(configuration)
         
-        drawSphereAtOrigin()
+//        drawSphereAtOrigin()
 //        drawBOxAt1200High()
 //        drawPyramidAt600Below()
-        drawCatOnPlane()
+//        drawCatOnPlane()
+        drawTorusAt300()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -84,6 +85,17 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         sceneView.scene.rootNode.addChildNode(cat)
     }
     
+    func drawTorusAt300() {
+        let torus = SCNNode(geometry: SCNTorus(ringRadius: 0.05, pipeRadius: 0.03))
+        torus.geometry?.firstMaterial?.diffuse.contents = UIColor.red
+        torus.geometry?.firstMaterial?.specular.contents = UIColor.white
+        torus.position = SCNVector3(0.2, 0, 0)
+        torus.eulerAngles = SCNVector3(0, 0, 45.degreesToRadians())
+        sceneView.scene.rootNode.addChildNode(torus)
+    }
+    
+    
+    
     // MARK: - ARSCNViewDelegate
     
 /*
@@ -108,5 +120,12 @@ class ViewController: UIViewController, ARSCNViewDelegate {
     func sessionInterruptionEnded(_ session: ARSession) {
         // Reset tracking and/or remove existing anchors if consistent tracking is required
         
+    }
+}
+
+
+extension Int {
+    func degreesToRadians() -> CGFloat {
+        return CGFloat(self) * .pi / 180
     }
 }
