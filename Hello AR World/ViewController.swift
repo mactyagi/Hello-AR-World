@@ -41,8 +41,9 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         sceneView.session.run(configuration)
         
         drawSphereAtOrigin()
-        drawBOxAt1200High()
-        drawPyramidAt600Below()
+//        drawBOxAt1200High()
+//        drawPyramidAt600Below()
+        drawCatOnPlane()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -54,7 +55,8 @@ class ViewController: UIViewController, ARSCNViewDelegate {
     
     func drawSphereAtOrigin() {
         let sphere = SCNNode(geometry: SCNSphere(radius: 0.05))
-        sphere.geometry?.firstMaterial?.diffuse.contents = UIColor.blue
+        sphere.geometry?.firstMaterial?.diffuse.contents = UIImage.earth
+        sphere.geometry?.firstMaterial?.specular.contents = UIColor.yellow
         sphere.position = SCNVector3(0, 0, 0)
         sceneView.scene.rootNode.addChildNode(sphere)
     }
@@ -69,10 +71,17 @@ class ViewController: UIViewController, ARSCNViewDelegate {
     
     func drawPyramidAt600Below() {
         let pyramid = SCNNode(geometry: SCNPyramid(width: 0.1, height: 0.1, length: 0.1))
-        pyramid.position = SCNVector3(0, -0.2, 0.3)
+        pyramid.position = SCNVector3(0, -0.2, -0.3)
         pyramid.geometry?.firstMaterial?.diffuse.contents = UIColor.green
         pyramid.geometry?.firstMaterial?.specular.contents = UIColor.red
         sceneView.scene.rootNode.addChildNode(pyramid)
+    }
+    
+    func drawCatOnPlane() {
+        let cat = SCNNode(geometry: SCNPlane(width: 0.1, height: 0.1))
+        cat.geometry?.firstMaterial?.diffuse.contents = UIImage.cat
+        cat.position = SCNVector3(-0.2, 0, 0)
+        sceneView.scene.rootNode.addChildNode(cat)
     }
     
     // MARK: - ARSCNViewDelegate
